@@ -13,10 +13,6 @@
 (function () {
     'use strict';
 
-    // === CONFIGURATION ===
-    const STORAGE_KEY_1 = 'hf_saved_textarea_1';
-    const STORAGE_KEY_2 = 'hf_saved_textarea_2';
-
     // === HELPERS ===
     function randomString(length) {
         const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
@@ -29,29 +25,6 @@
 
     function getByXPath(xpath) {
         return document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
-    }
-
-    // === TEXTAREA HANDLING ===
-    function saveTextareaValues() {
-        setTimeout(() => {
-            const t1 = getByXPath('/html/body/div[1]/div[1]/main/div[1]/div/div/div[3]/div[1]/div[2]/div[1]/label/div/textarea');
-            const t2 = getByXPath('/html/body/div[1]/div[1]/main/div[1]/div/div/div[3]/div[1]/div[3]/div[2]/div/div[1]/div[1]/label/div/textarea');
-            if (t1) localStorage.setItem(STORAGE_KEY_1, t1.value);
-            if (t2) localStorage.setItem(STORAGE_KEY_2, t2.value);
-            console.log("✅ Saved textarea values");
-        }, 500);
-    }
-
-    function restoreTextareaValues() {
-        setTimeout(() => {
-            const val1 = localStorage.getItem(STORAGE_KEY_1);
-            const val2 = localStorage.getItem(STORAGE_KEY_2);
-            const t1 = getByXPath('/html/body/div[1]/div[1]/main/div[1]/div/div/div[3]/div[1]/div[2]/div[1]/label/div/textarea');
-            const t2 = getByXPath('/html/body/div[1]/div[1]/main/div[1]/div/div/div[3]/div[1]/div[3]/div[2]/div/div[1]/div[1]/label/div/textarea');
-            if (t1 && val1 !== null) t1.value = val1;
-            if (t2 && val2 !== null) t2.value = val2;
-            console.log("✅ Restored textarea values");
-        }, 1000);
     }
 
     // === LOGOUT ===
@@ -330,7 +303,6 @@
         });
 
         button.onclick = async () => {
-            saveTextareaValues();
             const email = randomEmail();
             const username = randomString(10);
             await logoutIfLoggedIn();
@@ -351,7 +323,6 @@
     // === INITIALIZE ===
     window.addEventListener('load', () => {
         createButton();
-        restoreTextareaValues();
         startBillingMonitor();
     });
 })();
