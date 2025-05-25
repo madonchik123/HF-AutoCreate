@@ -3,7 +3,7 @@
 // @namespace    http://tampermonkey.net/
 // @version      1.5
 // @description  Automates logout, random account creation with captcha retry, saves/restores textarea values, and monitors billing usage on HuggingFace. Full flow in-page!
-// @author       
+// @author
 // @match        https://huggingface.co/*
 // @grant        none
 // ==/UserScript==
@@ -179,6 +179,71 @@
     }
 
     // === BILLING MONITOR ===
+    function showPromptTooltip(message, onYes, onClose) {
+        // Remove any existing tooltip first
+        const existing = document.getElementById('hf-tooltip-prompt');
+        if (existing) existing.remove();
+
+        // Create tooltip container
+        const tooltip = document.createElement('div');
+        tooltip.id = 'hf-tooltip-prompt';
+        tooltip.style.position = 'fixed';
+        tooltip.style.top = '10px';
+        tooltip.style.right = '10px';
+        tooltip.style.background = '#333';
+        tooltip.style.color = '#fff';
+        tooltip.style.padding = '12px 16px';
+        tooltip.style.borderRadius = '8px';
+        tooltip.style.boxShadow = '0 2px 8px rgba(0,0,0,0.3)';
+        tooltip.style.zIndex = 999999;
+        tooltip.style.fontFamily = 'Arial, sans-serif';
+        tooltip.style.maxWidth = '280px';
+
+        // Message
+        const msg = document.createElement('div');
+        msg.textContent = message;
+        tooltip.appendChild(msg);
+
+        // Buttons container
+        const btns = document.createElement('div');
+        btns.style.marginTop = '8px';
+        btns.style.textAlign = 'right';
+
+        // Yes button
+        const yesBtn = document.createElement('button');
+        yesBtn.textContent = 'Yes';
+        yesBtn.style.background = '#4CAF50';
+        yesBtn.style.color = '#fff';
+        yesBtn.style.border = 'none';
+        yesBtn.style.padding = '6px 12px';
+        yesBtn.style.marginRight = '8px';
+        yesBtn.style.borderRadius = '4px';
+        yesBtn.style.cursor = 'pointer';
+        yesBtn.onclick = () => {
+            tooltip.remove();
+            if (onYes) onYes();
+        };
+        btns.appendChild(yesBtn);
+
+        // Close button (×)
+        const closeBtn = document.createElement('button');
+        closeBtn.textContent = '×';
+        closeBtn.style.background = 'transparent';
+        closeBtn.style.color = '#fff';
+        closeBtn.style.border = 'none';
+        closeBtn.style.fontSize = '18px';
+        closeBtn.style.lineHeight = '1';
+        closeBtn.style.cursor = 'pointer';
+        closeBtn.onclick = () => {
+            tooltip.remove();
+            if (onClose) onClose();
+        };
+        btns.appendChild(closeBtn);
+
+        tooltip.appendChild(btns);
+        document.body.appendChild(tooltip);
+    }
+
     async function checkBillingMinutes() {
         try {
             const res = await fetch("https://huggingface.co/settings/billing", {
@@ -218,9 +283,18 @@
             console.log(`Detected minutes used: ${minutes}`);
 
             if (minutes > 4) {
-                if (confirm(`Your usage is ${minutes}/5 minutes. Generate new account?`)) {
-                    document.querySelector('#hf-auto-account-btn').click();
-                }
+                showPromptTooltip(
+                    `Your usage is ${minutes}/5 minutes. Generate new account?`,
+                    () => {
+                        // User clicked Yes
+                        const btn = document.querySelector('#hf-auto-account-btn');
+                        if (btn) btn.click();
+                    },
+                    () => {
+                        // User closed tooltip without confirming, optional fallback here
+                        console.log('User closed the billing prompt tooltip');
+                    }
+                );
             }
         } catch (e) {
             console.error("Error checking billing minutes:", e);
