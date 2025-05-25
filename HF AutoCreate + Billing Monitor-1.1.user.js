@@ -3,7 +3,9 @@
 // @namespace    http://tampermonkey.net/
 // @version      1.5
 // @description  Automates logout, random account creation with captcha retry, saves/restores textarea values, and monitors billing usage on HuggingFace. Full flow in-page!
-// @author
+// @author       madonchik123
+// @downloadURL https://github.com/madonchik123/HF-AutoCreate/raw/refs/heads/main/HF%20AutoCreate%20+%20Billing%20Monitor-1.1.user.js
+// @updateURL https://github.com/madonchik123/HF-AutoCreate/raw/refs/heads/main/HF%20AutoCreate%20+%20Billing%20Monitor-1.1.user.js
 // @match        https://huggingface.co/*
 // @grant        none
 // ==/UserScript==
