@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         HuggingFace Auto Account Manager
 // @namespace    http://tampermonkey.net/
-// @version      1.5
+// @version      1.6
 // @description  Automates logout, random account creation with captcha retry, saves/restores textarea values, and monitors billing usage on HuggingFace. Full flow in-page!
 // @author       madonchik123
 // @downloadURL https://github.com/madonchik123/HF-AutoCreate/raw/refs/heads/main/HF%20AutoCreate%20+%20Billing%20Monitor-1.1.user.js
