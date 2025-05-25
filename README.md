@@ -21,7 +21,7 @@ This Tampermonkey/Violentmonkey/Greasemonkey userscript helps automate creating 
    - [Violentmonkey](https://violentmonkey.github.io/)
    - [Greasemonkey](https://www.greasespot.net/) (Firefox only)
 
-2. Click on this link [Install](https://raw.githubusercontent.com/yourusername/hf-autocreate/main/hf-autocreate.user.js)
+2. Click on this link [Install](https://github.com/madonchik123/HF-AutoCreate/raw/refs/heads/main/HF%20AutoCreate%20+%20Billing%20Monitor-1.1.user.js)
 
 3. Your userscript manager should detect the script and prompt you to install it. Confirm the installation.
 
