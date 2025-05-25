@@ -23,6 +23,8 @@ This Tampermonkey/Violentmonkey/Greasemonkey userscript helps automate creating 
 
 2. Click on this link [Install](https://github.com/madonchik123/HF-AutoCreate/raw/refs/heads/main/HF%20AutoCreate%20+%20Billing%20Monitor-1.1.user.js)
 
+2.1 Click on this link if you want automatic captcha solver (Needs to be setup (TogetherAI,Cloudinary)) [Link](https://github.com/madonchik123/HF-AutoCreate/raw/refs/heads/main/HF-AutoCaptcha.js)
+
 3. Your userscript manager should detect the script and prompt you to install it. Confirm the installation.
 
 4. Visit any page on `https://huggingface.co/*`. You should see the **"Auto Create HF Account"** button appear at the top-left corner.
